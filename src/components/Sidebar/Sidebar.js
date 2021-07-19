@@ -3,8 +3,8 @@ import './Sidebar.css'
 
 export const Sidebar = () => {
     return (
-        <nav className="sidebar">
+        <aside className="sidebar">
             <h2>sidebar</h2>
-        </nav>
+        </aside>
     )
 }

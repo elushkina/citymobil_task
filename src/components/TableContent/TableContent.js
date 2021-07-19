@@ -4,7 +4,7 @@ import { SearchForm } from './SearchForm/SearchForm'
 import { TableFooter } from './TableFooter/TableFooter'
 import { Table } from './Table/Table'
 import { fetchCars } from './fetchApi'
-import {Preloader} from "../Preloader/Preloader";
+import { Preloader } from "../Preloader/Preloader";
 
 export const TableContent = () => {
     let [defaultCars, setDefaultCars] = useState([])
@@ -12,7 +12,8 @@ export const TableContent = () => {
     let [tariffs, setTariffs] = useState([])
     let [sortDirection, setSortDirection] = useState('')
     let [searchText, setSearchText] = useState('')
-    let [selectedCar, setSelectedCar] = useState('')
+    let [selectedCar, setSelectedCar] = useState({title: '', index: 0})
+    let [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetchCars()
@@ -23,6 +24,7 @@ export const TableContent = () => {
                 setCars(cars)
                 setTariffs(tariffs_list)
             })
+            .finally(() => setIsLoading(false))
     }, [])
 
     function sortByColumn() {
@@ -46,6 +48,7 @@ export const TableContent = () => {
         e.preventDefault()
         const filteredCars = defaultCars.filter(car => `${car.mark} ${car.model}`.toLowerCase().indexOf(searchText.trim()) !== -1)
 
+        setSortDirection('')
         setCars([...filteredCars])
     }
 
@@ -53,12 +56,17 @@ export const TableContent = () => {
         setSelectedCar(car)
     }
 
-    if (cars.length === 0 && tariffs.length === 0) return <Preloader />
+    if (isLoading) return <Preloader />
+
+    if (cars.length === 0 && tariffs.length === 0) return <div className="content__error">Не удалось получить список машин!</div>
+
     return (
         <main className="content">
             <SearchForm searchText={searchText} setSearchText={setSearchText} filterBySearchText={filterBySearchText} />
-            <Table cars={cars} tariffs={tariffs} sortByColumn={sortByColumn} sortDirection={sortDirection} selectCar={selectCar} />
-            <TableFooter selectedCar={selectedCar} />
+            <Table cars={cars} tariffs={tariffs} sortByColumn={sortByColumn}
+                   sortDirection={sortDirection} selectCar={selectCar}
+                   selectedCar={selectedCar}/>
+            <TableFooter selectedCar={selectedCar} tariffs={tariffs}/>
         </main>
     )
 }
