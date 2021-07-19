@@ -1,0 +1,7 @@
+.table-footer {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(240, 242, 244, 0.5);
+    border: 1px solid #DEE5EB;
+    border-radius: 5px;
+}

@@ -1,0 +1,36 @@
+.table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+    table-layout: fixed;
+    margin: 10px 0;
+}
+
+.table thead td {
+    background: rgba(240, 242, 244, 0.5);
+    color: #7B8395;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border-style: solid;
+    border-width:  1px 1px;
+    border-color: rgba(198, 209, 221, 0.5);
+}
+
+.table td:first-child {
+    width: 17%;
+    text-align: left;
+}
+
+
+.table__arrow {
+    position: relative;
+    top: 2px;
+    left: 10px;
+    transition: .3s;
+}
+
+.table__arrow--rotated {
+    transform: rotate(180deg);
+}
